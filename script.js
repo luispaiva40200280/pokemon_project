@@ -58,21 +58,24 @@ function getTypes(types){
     return typesArray.join(', ');
 }
 function getDetailPokemonData(pokemonList){
-    let PokemonListDatail = []
-    pokemonList.forEach(pokemon => {
+    let PokemonListDetail = [];
+    let promises = pokemonList.map(pokemon => {
         const pokemonData = pokemon.url;
-        fetch(pokemonData).then(response => response.json()).then(data => {
-            PokemonListDatail.push(data)
-            pokemonListUI.innerHTML += displayPokemonData(data)
-             
+        return fetch(pokemonData).then(response => response.json());
+    });
+
+    Promise.all(promises).then(dataArray => {
+        dataArray.forEach(data => {
+            PokemonListDetail.push(data);
+            pokemonListUI.innerHTML += displayPokemonData(data);
         });
     });
-   return PokemonListDatail
-}//end of the funcion
+
+    return PokemonListDetail;
+}//end of the function
+
 // Search functionality by types
-
-
-pokemonsTypes.addEventListener('change', (e) => {
+pokemonsTypes.addEventListener('change', async (e) => {
     e.preventDefault();
     const selectedType = e.target.value;
     if (selectedType === ''){
@@ -80,24 +83,35 @@ pokemonsTypes.addEventListener('change', (e) => {
         getDetailPokemonData(pokemonList);
         return;
     }
-    fetch(`https://pokeapi.co/api/v2/type/${selectedType}`).then(response => response.json()).then(data => {
-       const poketType = data.pokemon
-       poketType.forEach(pokemon =>{
-        const pokemonData = pokemon.pokemon.url
-        fetch(pokemonData).then(response => response.json()).then(data => {
-            pokemonListUI.innerHTML = ''
-            pokemonListUI.innerHTML += displayPokemonData(data)
-             
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/type/${selectedType}`)
+        const data = await response.json();
+        const poketType = data.pokemon;
+        pokemonListUI.innerHTML = ''; // remove all the previous data
+        poketType.forEach(pokemon => {
+            const pokemonData = pokemon.pokemon.url;
+            if (pokemonData) {
+                fetch(pokemonData).then(response => response.json()).then(data => {
+                    pokemonListUI.innerHTML += displayPokemonData(data);
+                    
+                    
+                }).catch(error => {
+                    console.error('Error fetching pokemon data:', error);
+                });
+            } else {
+                console.error('Invalid URL:', pokemonData);
+            }
         });
+        
+        console.log(data);
+        console.log(poketType);
+             
+    } catch (error) {
+        console.error('Error fetching type data:', error);
+    }
     
-       })
-        console.log(data)
-        console.log(poketType)
-         
-    });
     console.log(e.target.value);
-    
-}) 
+});
 
 // Event Listeners
 form.addEventListener('submit', (e) => {
@@ -105,6 +119,10 @@ form.addEventListener('submit', (e) => {
     console.log('Form Submitted');
 })
 
+// sort button
+/* sortBtn.addEventListener('click', () => {
+    console.log('Sort Button Clicked');
+}) */
 
 
 
