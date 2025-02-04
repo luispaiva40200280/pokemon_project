@@ -6,3 +6,9 @@
     background-color: #4e5970;
     color: #fff;
 }
+
+.card-footer > small{
+    color: #dbdbdb;
+    background-color: #fff;
+
+}
