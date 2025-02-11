@@ -112,11 +112,37 @@ pokemonsTypes.addEventListener('change', async (e) => {
     
     console.log(e.target.value);
 });
+//search POKEMON BY NAME OR ID
+function searchByName(pokemonList, pokemonTosearch){
+    
+    if (pokemonTosearch === ''){
+        pokemonListUI.innerHTML = '';
+        getDetailPokemonData(pokemonList);
+        return;
+    }
+    let filteredPokemons = pokemonList.filter(pokemon => {
+        return pokemon.name.toLowerCase().includes(pokemonTosearch) || pokemon.url.split('/')[6].includes(pokemonTosearch);
+    }); 
+    pokemonListUI.innerHTML = '';
+    getDetailPokemonData(filteredPokemons);
+    if(filteredPokemons.length === 0){
+        pokemonListUI.innerHTML = '<h2>No Pokémon Found</h2>';
+        console.log('No Pokémon Found');
+        return;
+    }
+
+    console.log(pokemonTosearch);
+    console.log(filteredPokemons);
+    
+}//end of searchByName
 
 // Event Listeners
-form.addEventListener('submit', (e) => {
+form.addEventListener('input', (e) => {
     e.preventDefault();
-    console.log('Form Submitted');
+    let pokemonTosearch = e.target.value;
+    searchByName(pokemonList, pokemonTosearch);
+
+    console.log(pokemonTosearch);
 })
 
 // sort button
@@ -125,5 +151,6 @@ form.addEventListener('submit', (e) => {
 }) */
 
 
-
 getPokemonData();
+
+
