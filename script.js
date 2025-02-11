@@ -1,7 +1,4 @@
 // Description: This file contains the script for the Pokemon API project.
-
-// Variables
-
 // DOM Elements
 const pokemonListUI = document.getElementById('pokemonList');
 const searchInput = document.querySelector('#pokemonName');
