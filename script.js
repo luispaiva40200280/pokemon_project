@@ -33,17 +33,14 @@ async function getPokemonData(){
 // Display Pokémon Data
 function displayPokemonData(pokemonData){
     const {name , types , sprites} = pokemonData;
-    return  `<div class="card m-2" style="width: 18rem;">
-                            <img src="${sprites.front_default}" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">${name}</h5>
-                                <p class="card-text">${getTypes(types)}</p>
-                                <a href="#" class="btn btn-primary">Details</a>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </div>
-                        </div>`
+    return  `<div class="mb-2 p-2">
+    <div class="card" style="width:13rem" role="button" data-toggle="modal" data-target="#exampleModal">
+                <img src="${sprites.front_default}" class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class ="card-title">${name}</h5>   
+                </div>
+           </div>
+           </div>`
     //end
     
 }//end

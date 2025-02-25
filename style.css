@@ -1,14 +1,38 @@
-*,boby{
+
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #2d3e50, #d68244);
+    background-size: cover;
+    background-attachment: fixed;
+    /* Adicionando a textura com um noise effect */
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+    display: flex;
+    justify-content: center;
     
-    list-style: none;
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-    background-color: #4e5970;
-    color: #fff;
+}
+body::before {
+    content: "";
+    position: absolute;
+    
+    background: url('https://www.transparenttextures.com/patterns/noisy.png');
+    opacity: 0.25; 
+    pointer-events: none;
 }
 
-.card-footer > small{
-    color: #dbdbdb;
-    background-color: #fff;
 
+
+
+#pokemonList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    align-items: center;
+    height: 100vh;
+    margin-top: 50px;
 }
+

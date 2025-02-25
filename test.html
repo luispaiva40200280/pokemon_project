@@ -7,105 +7,60 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
-  <style>
-    body {
-        background-color: #E87722;
-        text-align: center;
-        color: white;
-        font-family: Arial, sans-serif;
-    }
-    .pokemon-logo {
-        max-width: 300px;
-        margin-top: 20px;
-    }
-    .pokemon-container {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        margin: 20px 0;
-    }
-    .pokemon-container img {
-        max-width: 120px;
-    }
-    .loading-bar {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 10px 20px;
-            background: white;
-            border-radius: 20px;
-            color: red;
-            font-style: italic;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-            width: 300px;
-        }
-        .pokeball {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: linear-gradient(to bottom, red 50%, white 50%);
-            border: 2px solid black;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .pokeball::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 8px;
-            height: 8px;
-            background: white;
-            border: 2px solid black;
-            border-radius: 50%;
-            z-index: 2;
-        }
-        .pokeball::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: black;
-            transform: translateY(-50%);
-            z-index: 1;
-        }
-    .region-text {
-        font-size: 100px;
-        font-weight: bold;
-        color: #6B4F3F;
-        text-transform: uppercase;
-        font-family: 'Arial Black', sans-serif;
-        letter-spacing: -3px;
-        line-height: 0.9;
-        display: inline-block;
-        transform: scale(1.2, 1);
-    }
-</style>
+
 </head>
 <body>
-    <div>
-        <img src="Logo.png" alt="Pokémon Logo" class="pokemon-logo">
-    </div>
-    <div class="pokemon-container">
-        <img src="Charmander.png" alt="Charmander">
-        <img src="Squirtle.png" alt="Squirtle">
-        <img src="Bulbasaur.png" alt="Bulbasaur">
-    </div>
-   
-    <div>
-        <span class="loading-bar">loading pokedex...
-            
-            <div class="pokeball"></div>
-            <div class="pokeball" style="background: linear-gradient(to bottom, blue 50%, white 50%);"></div>
-            <div class="pokeball" style="background: linear-gradient(to bottom, yellow 50%, white 50%);"></div>
-        </span>
-    </div>
-    <div class="region-text">KANTO REGION</div>
+    <form id="searchForm" class="row g-3">
+        <!-- Campo de busca -->
+        <div class="col-12 col-md-5">
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="bi bi-search"></i>
+                </span>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    placeholder="Search by id or name"
+                />
+            </div>
+        </div>
+    
+        <!-- Seleção de tipo -->
+        <div class="col-12 col-md-4">
+            <div class="input-group">
+                <span class="input-group-text">
+                    <i class="bi bi-sliders"></i>
+                </span>
+                <select class="form-select" id="pokemonType">
+                    <option value="0">Select Type</option>
+                    <option value="1">Grass</option>
+                    <option value="2">Fire</option>
+                    <option value="3">Water</option>
+                    <option value="4">Electric</option>
+                    <option value="5">Ice</option>
+                    <option value="6">Fighting</option>
+                    <option value="7">Poison</option>
+                    <option value="8">Ground</option>
+                    <option value="9">Flying</option>
+                    <option value="10">Psychic</option>
+                    <option value="11">Bug</option>
+                    <option value="12">Rock</option>
+                    <option value="13">Ghost</option>
+                    <option value="14">Dragon</option>
+                    <option value="15">Dark</option>
+                    <option value="16">Steel</option>
+                    <option value="17">Fairy</option>
+                </select>
+            </div>
+        </div>
+    
+        <!-- Botões -->
+        <div class="col-12 col-md-3 d-grid d-md-flex gap-2">
+            <button type="submit" class="btn btn-warning fw-bold">search</button>
+            <button type="button" class="btn btn-outline-primary" id="sort-btn">sort by</button>
+        </div>
+    </form>
+       
 
 </body>
 </html>
