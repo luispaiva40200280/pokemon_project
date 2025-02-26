@@ -17,11 +17,7 @@ async function getPokemonData(){
         //console.log(pokemonList);
         //console.log(data);
         getDetailPokemonData(pokemonList);
-        sortBtn.addEventListener("click",()=>{
-            pokemonList.sort((a,b) => a.name.localeCompare(b.name));
-            pokemonListUI.innerHTML = '';
-            getDetailPokemonData(pokemonList);
-        })
+       
       
     } catch (error) {
         console.error(error);
@@ -33,11 +29,12 @@ async function getPokemonData(){
 // Display Pokémon Data
 function displayPokemonData(pokemonData){
     const {name , types , sprites} = pokemonData;
-    return  `<div class="mb-2 p-2">
-    <div class="card" style="width:13rem" role="button" data-toggle="modal" data-target="#exampleModal">
+    return  `<div >
+    <div class="card" style="width:11rem" role="button" data-toggle="modal" data-target="#exampleModal">
                 <img src="${sprites.front_default}" class="card-img-top" alt="...">
                 <div class="card-body text-center">
-                    <h5 class ="card-title">${name}</h5>   
+                    <h5 class ="card-title">${name}</h5>
+                    <a class="btn btn btn-sm " id="types">${getTypes(types)} </a> 
                 </div>
            </div>
            </div>`
@@ -49,62 +46,60 @@ function getTypes(types){
     types.forEach(type => {
         typesArray.push(type.type.name);
     });
-    return typesArray.join(', ');
+    return typesArray.join( ' | ');
 }
 function getDetailPokemonData(pokemonList){
-    let PokemonListDetail = [];
-    let promises = pokemonList.map(pokemon => {
+    let promises = pokemonList.map(async pokemon => {
         const pokemonData = pokemon.url;
-        return fetch(pokemonData).then(response => response.json());
+        const response = await fetch(pokemonData);
+        console.log(response);
+        return await response.json();
     });
 
     Promise.all(promises).then(dataArray => {
         dataArray.forEach(data => {
-            PokemonListDetail.push(data);
             pokemonListUI.innerHTML += displayPokemonData(data);
+            console.log(data);
         });
     });
 
-    return PokemonListDetail;
 }//end of the function
 
+// Search functionality by type
+function getPokemonsByType(type){
+    let selectedType = type;
+    filteredPokemons = [];
+    pokemonListUI.innerHTML = '';
+    let promises = pokemonList.map(async pokemon => {
+        const pokemonData = pokemon.url;
+        const response = await fetch(pokemonData);
+        return await response.json();
+    });
+
+    Promise.all(promises).then(dataArray => {
+        dataArray.forEach(data => {
+            let types = data.types;
+            types.forEach(type => {
+                if(type.type.name === selectedType){
+                    filteredPokemons.push(data.species);
+                    pokemonListUI.innerHTML += displayPokemonData(data);
+                    //console.log(data);
+                }
+            });
+        });
+    });              
+
+    return filteredPokemons;
+ }   
+
 // Search functionality by types
-pokemonsTypes.addEventListener('change', async (e) => {
+pokemonsTypes.addEventListener('change', (e) => {
     e.preventDefault();
     const selectedType = e.target.value;
-    if (selectedType === ''){
-        pokemonListUI.innerHTML = '';
-        getDetailPokemonData(pokemonList);
-        return;
-    }
-    try {
-        const response = await fetch(`https://pokeapi.co/api/v2/type/${selectedType}`)
-        const data = await response.json();
-        const poketType = data.pokemon;
-        pokemonListUI.innerHTML = ''; // remove all the previous data
-        poketType.forEach(pokemon => {
-            const pokemonData = pokemon.pokemon.url;
-            if (pokemonData) {
-                fetch(pokemonData).then(response => response.json()).then(data => {
-                    pokemonListUI.innerHTML += displayPokemonData(data);
-                    
-                    
-                }).catch(error => {
-                    console.error('Error fetching pokemon data:', error);
-                });
-            } else {
-                console.error('Invalid URL:', pokemonData);
-            }
-        });
-        
-        console.log(data);
-        console.log(poketType);
-             
-    } catch (error) {
-        console.error('Error fetching type data:', error);
-    }
+    getPokemonsByType(selectedType);
     
-    console.log(e.target.value);
+    console.log(pokemonList);
+    console.log(selectedType);
 });
 //search POKEMON BY NAME OR ID
 function searchByName(pokemonList, pokemonTosearch){
@@ -144,7 +139,20 @@ form.addEventListener('input', (e) => {
     console.log('Sort Button Clicked');
 }) */
 
+function sortPokemons(arr){
+    arr.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+    });
+    return arr;
+}
 
-getPokemonData();
+// Event Listeners
+getPokemonData(); 
+sortBtn.addEventListener('click', () => {
+    pokemonListUI.innerHTML = '';
+    pokemonList = sortPokemons(pokemonList);
+    console.log(pokemonList);
+    getDetailPokemonData(pokemonList);
+});
 
 
