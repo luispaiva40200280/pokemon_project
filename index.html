@@ -12,12 +12,12 @@
 </head>
 <body>
     
-    <main>
-        <div class="container mt-4">
+    <main class="container-fluid  p-4">
+        <div class="container mt-4 mb-4"> 
             <!-- FORM -->
-            <form id="searchForm" class="row d-flex  g-3 "> 
+            <form id="searchForm" class="row d-flex justify-content-center align-items-center"> 
                 <!-- Campo de busca -->
-                <div class="col-12 col-md-5">
+                <div class="col-10 col-md-4">
                     <div class="input-group">
                         <span class="input-group-text">
                             <i class="bi bi-search"></i>
@@ -31,7 +31,7 @@
                 </div>
             
                 <!-- Seleção de tipo -->
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-md-3">
                     <div class="input-group">
                         <span class="input-group-text">
                             <i class="bi bi-sliders"></i>
@@ -60,7 +60,7 @@
                 </div>
             
                 <!-- Botões -->
-                <div class="col-12 col-md-3 d-grid gap-3">
+                <div class="col-12 col-md-3 d-grid gap-2 d-md-block">
                     <button type="submit" class="btn btn-warning fw-bold">search</button>
                     <button type="button" class="btn btn-outline-primary" id="sort-btn">sort by</button>
                 </div>
@@ -69,8 +69,8 @@
                
         </div>
         <!-- pokemon list -->
-        <div class="container-fluid px-4 gx-3" >
-            <div id="pokemonList" class="container px-4 gx-3">
+        <div class="container" >
+            <div id="pokemonList" class="container ">
             </div>
         </div>
 
@@ -78,7 +78,6 @@
     </main>
 
    
-    
    <!--  <div class="card" style="width:18rem" role="button" data-toggle="modal" data-target="#exampleModal">
         
         <img src="Playful Dinosaur-Themed Objects.jpeg" class="card-img-top" alt="...">
