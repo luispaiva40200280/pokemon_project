@@ -44,7 +44,7 @@ function getTypes(types){
 function displayPokemonData(pokemonData){
     const {name , types , sprites , id} = pokemonData;
     return  `
-        <div class="card" style="width:11rem" value="${name}" role="button">
+        <div class="card" style="width:11rem" value="${name}" role="button" " data-toggle="modal" data-target="#pokemonDetails">
         <img src="${sprites?.front_default ?? null } " class="card-img-top" alt="...">
         <div class="card-body text-center">
         <h5 class ="card-title"><span>#${id}</span> ${name}</h5>
@@ -67,20 +67,16 @@ getPokemons().then(listPokemons => {
 
 // Search functionality by type
 function getPokemonsByType(type){
-    if(type === '' ){
-        getPokemons();
-        pokemonListUI.innerHTML = '';
-        updateUI(pokemonList);
-        console.log(listPokemons, 'all');
-        filteredPokemons = [];
-        return;
-    }
-    filteredPokemons = listPokemons.filter(pokemon => {
-        return pokemon.types.some(pokemonType => pokemonType.type.name === type);
+    filteredPokemons =  listPokemons.filter(pokemon => {
+        // If no type is selected, return all Pokemons. Else, return only Pokemons with the selected type.  //
+       return type === '' ? pokemon : pokemon.types.some(pokemonType => 
+                pokemonType.type.name === type);
+        
     });
-
+    console.log(listPokemons)
     pokemonListUI.innerHTML = '';
-    updateUI(filteredPokemons);
+    updateUI(filteredPokemons); 
+
 }
 
 pokemonsTypes.addEventListener('change', async (e) => {
@@ -100,8 +96,7 @@ function sortPokemons(arr){
 }
 sortBtn.addEventListener('click', async (e) => {
     e.preventDefault();
-    e.preventDefault();
-    const sortedPokemons = sortPokemons(filteredPokemons.length ? filteredPokemons : listPokemons);
+    const sortedPokemons = sortPokemons(filteredPokemons);
     pokemonListUI.innerHTML = '';
     updateUI(sortedPokemons)
 });
@@ -131,23 +126,13 @@ form.addEventListener('input', (e) => {
 
 /* scroll up  */
 
-window.addEventListener('scroll', function() {
-    if (document.documentElement.scrollTop > 5) {
-        document.getElementById('scrollUp').style.display = 'none';
-    } else {
-        document.getElementById('scrollUp').style.display = 'block';
-        upscrollfuncion() ;
-        
-    }
-});
+
 /* scroll up star */
 function upscrollfuncion(){
     document.documentElement.scrollTop -= 200; // how much you want to scroll
     if (document.documentElement.scrollTop > 0) {
-        setTimeout(upscrollfuncion, 0);
-    }  else {
-        document.getElementById('scrollUp').style.display = 'none';
-    }
+        setTimeout(upscrollfuncion, 55);
+    }  
 } ;
 
 
