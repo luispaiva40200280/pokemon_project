@@ -37,6 +37,7 @@ body {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1495 1495' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"), radial-gradient(circle at var(--x-0) var(--y-0), var(--c-0) var(--s-start-0), transparent var(--s-end-0)), radial-gradient(circle at var(--x-1) var(--y-1), var(--c-1) var(--s-start-1), transparent var(--s-end-1)), radial-gradient(circle at var(--x-2) var(--y-2), var(--c-2) var(--s-start-2), transparent var(--s-end-2)), radial-gradient(circle at var(--x-3) var(--y-3), var(--c-3) var(--s-start-3), transparent var(--s-end-3)), radial-gradient(circle at var(--x-4) var(--y-4), var(--c-4) var(--s-start-4), transparent var(--s-end-4));
     /*animation: hero-gradient-animation 10s linear infinite alternate;*/
     background-attachment: fixed;
+    overflow: auto;
  
 }
 
@@ -67,7 +68,12 @@ form{
     color: #d4d4d4;
 
 }
-
+a{
+    text-decoration: none;
+    color: inherit;
+    stroke: none;
+    
+}
 .card{
     background-color: #dfdfdf;
     border-radius: 35px 5px 35px 5px ;
@@ -83,6 +89,15 @@ form{
     height: 12rem;
     width: 13rem;
     
+}
+.card-body {
+    margin-bottom: auto;
+}
+.card-body > h5 {
+    font-size: .9em;
+    margin-bottom: 0;
+    font-weight: bold;
+    color: #242424;
 }
 .card > img{
     width: 70%;
@@ -123,5 +138,45 @@ h2{
     color: #4b4b4b;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 0.9em;
+}
+
+span{
+    font-weight:bold;
+    text-transform: uppercase;
+    font-size: small;
+    padding: auto 0;
+}
+
+#scrollUP {
+    background-color: #79557e48;
+    color: rgb(85, 70, 70);
+    padding: 10px 20px;
+    border: none !important;
+    cursor: pointer;
+    border-radius: 25px;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    box-shadow: 0 2px 4px 0 rgba(88, 88, 88, 0.575);
+    &:hover {
+        background-color: #ad76bb;
+    }
+    &:active{
+        border: none !important;
+
+    }
+}
+#scrollUP > i{
+    font-size: 1.5em;
+    transition: color 0.3s ease;
+    color: #fff;
+    &:hover{
+        color: #79557e;
+    }
+    
 }
 

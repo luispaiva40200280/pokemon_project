@@ -2,7 +2,6 @@
 const pokemonListUI = document.getElementById('pokemonList');
 const pokemonsTypes = document.querySelector('#pokemonType');
 const form = document.querySelector('#searchForm');
-
 const sortBtn = document.getElementById('sort-btn');
 
 // Fetch data of Pokemons
@@ -10,21 +9,25 @@ let listPokemons = [];
 let filteredPokemons = [];
 
 async function getPokemons(){
+    try {
+        const response = await fetch("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=150");
+        const data = await response.json();
+        let pokemons = data.results;
+        // Get data of each Pokemon
+        let promises = pokemons.map(async pokemon => {
+            const pokemonData = pokemon.url;
+            const response = await fetch(pokemonData);
+            return await response.json();
+        });
     
-    const response = await fetch("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=150");
-    const data = await response.json();
-    let pokemons = data.results;
-   
-
-    // Get data of each Pokemon
-    let promises = pokemons.map(async pokemon => {
-        const pokemonData = pokemon.url;
-        const response = await fetch(pokemonData);
-        return await response.json();
-    });
-
-    listPokemons = await Promise.all(promises);
-    return listPokemons;
+        listPokemons = await Promise.all(promises);
+        console.log(listPokemons);
+        
+        return listPokemons;
+    }catch(err) {
+        console.error(err);
+        clearInterval(dotAnimation);
+    }
 
     // Display data of Pokemons
     
@@ -39,16 +42,16 @@ function getTypes(types){
 }
 // Display data of Pokemons
 function displayPokemonData(pokemonData){
-    const {name , types , sprites} = pokemonData;
+    const {name , types , sprites , id} = pokemonData;
     return  `
-    <div class="card" style="width:11rem" role="button" data-toggle="modal" data-target="#exampleModal">
-    <img src="${sprites?.front_default ?? null } " class="card-img-top" alt="...">
-    <div class="card-body text-center">
-    <h5 class ="card-title">${name}</h5>
-    <a class="btn btn btn-sm " id="types">${getTypes(types)} </a> 
-                </div>
-                </div>
-                `
+        <div class="card" style="width:11rem" value="${name}" role="button">
+        <img src="${sprites?.front_default ?? null } " class="card-img-top" alt="...">
+        <div class="card-body text-center">
+        <h5 class ="card-title"><span>#${id}</span> ${name}</h5>
+        <a class="btn btn btn-sm " id="types">${getTypes(types)} </a> 
+        </div>
+        </div>
+    `
 }//end
 
 // Call function to fetch data of Pokemons
@@ -125,3 +128,36 @@ form.addEventListener('input', (e) => {
   
     console.log(pokemonTosearch);
 })
+
+/* scroll up  */
+
+window.addEventListener('scroll', function() {
+    if (document.documentElement.scrollTop > 5) {
+        document.getElementById('scrollUp').style.display = 'none';
+    } else {
+        document.getElementById('scrollUp').style.display = 'block';
+        upscrollfuncion() ;
+        
+    }
+});
+/* scroll up star */
+function upscrollfuncion(){
+    document.documentElement.scrollTop -= 200; // how much you want to scroll
+    if (document.documentElement.scrollTop > 0) {
+        setTimeout(upscrollfuncion, 0);
+    }  else {
+        document.getElementById('scrollUp').style.display = 'none';
+    }
+} ;
+
+
+document.getElementById("scrollUP").addEventListener("click",  function() { 
+    upscrollfuncion()
+
+});
+ /* scroll up end  */
+ // display details from pokemon 
+ async function displayDetails(pokemonName){
+
+ }
+ 
