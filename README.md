@@ -42,5 +42,3 @@ This project is a web-based application that lets users search, sort, and browse
 
 ---
 
-Feel free to customize this `README.md` file based on your vision for the project! Let me know if you’d like me to tweak anything. 🚀
-
