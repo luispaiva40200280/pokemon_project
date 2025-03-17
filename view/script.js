@@ -44,13 +44,15 @@ function getTypes(types){
 function displayPokemonData(pokemonData){
     const {name , types , sprites , id} = pokemonData;
     return  `
-        <div class="card" style="width:11rem" value="${name}" role="button" " data-toggle="modal" data-target="#pokemonDetails">
-        <img src="${sprites?.front_default ?? null } " class="card-img-top" alt="...">
-        <div class="card-body text-center">
-        <h5 class ="card-title"><span>#${id}</span> ${name}</h5>
-        <a class="btn btn btn-sm " id="types">${getTypes(types)} </a> 
-        </div>
-        </div>
+                    <div class="card" type="buttton"  style="width:11rem" value="${name}" role="button" id="${id}" data-bs-toggle="modal" data-bs-target="#pokemonDetailsModal">
+                        <img src="${sprites?.front_default ?? null } " class="card-img-top" alt="...">
+                        <div class="card-body text-center">
+                             <h5 class ="card-title"><span>#${id}</span> ${name}</h5>
+                            <a class="btn btn btn-sm " id="types">${getTypes(types)} </a> 
+                        </div>
+                    </div>
+                    
+
     `
 }//end
 
@@ -59,6 +61,23 @@ function updateUI(listPokemons){
     listPokemons.forEach(pokemon => {
         pokemonListUI.innerHTML += displayPokemonData(pokemon);
     });
+
+    function attachCardListeners() {
+        const cards = document.querySelectorAll('.card');
+        
+        cards.forEach(card => {
+            card.addEventListener('click', function () {
+                const pokemonId = this.getAttribute("id");
+                const pokemon = listPokemons.find(p => p.id == pokemonId);
+                
+                if (pokemon) {
+                    displayDetails(pokemon);
+                }
+            });
+        });
+    }
+     
+    attachCardListeners();
 }
 getPokemons().then(listPokemons => {
     // Display data of Pokemons
@@ -142,7 +161,24 @@ document.getElementById("scrollUP").addEventListener("click",  function() {
 });
  /* scroll up end  */
  // display details from pokemon 
- async function displayDetails(pokemonName){
-
- }
  
+ 
+
+ function displayDetails(pokemon) {
+    const { name, types, sprites, id, height, weight } = pokemon;
+    const modalContent = document.getElementById("pokemonDetailsContent");
+    
+    modalContent.innerHTML = `
+        <div class="text-center">
+            <img src="${sprites?.front_default}" alt="${name}" class="img-fluid mb-3">
+            <h4>#${id} ${name}</h4>
+            <p><strong>Types:</strong> ${getTypes(types)}</p>
+            <p><strong>Height:</strong> ${height / 10} m</p>
+            <p><strong>Weight:</strong> ${weight / 10} kg</p>
+        </div>
+    `;
+
+    // Abrir o modal com Bootstrap
+    const modal = new bootstrap.Modal(document.getElementById('pokemonDetailsModal'));
+    modal.show();
+}
