@@ -12,9 +12,8 @@ This project is a web-based application that lets users search, sort, and browse
 ## File Structure
 
 - `index.html`: Main page with search and filter functionality.
-- `detailsPage.html`: A placeholder page for Pokémon details (can be expanded).
 - `script.js`: Core JavaScript logic for fetching, filtering, sorting, and displaying Pokémon data.
-- `style.css`: (If you have one) Add your custom styles here.
+- `style.css`: Custom styles.
 
 ## Technologies Used
 
