@@ -39,5 +39,4 @@ This project is a web-based application that lets users search, sort, and browse
 - Implement pagination for larger datasets.
 - Enhance styling with custom CSS.
 
----
 
